@@ -61,7 +61,9 @@ function on_loaded()
     if (iconfile)
     then
 	msg.warn("website icon use")
-        cmd = { args = {"xseticon.sh", iconfile } }
+--        cmd = { args = {"xseticon.sh", iconfile } }
+        cmd = { args = {"sh", "-c", 
+	    "xseticon -id $(xdotool search --sync --onlyvisible --pid $PPID) " .. iconfile } }
         utils.subprocess(cmd)
 	if (json_uploader) and (patched == nil)
 	then
