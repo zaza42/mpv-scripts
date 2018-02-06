@@ -1,5 +1,6 @@
 local utils = require 'mp.utils'
 local msg = require 'mp.msg'
+local patched = 1
 
 function os.capture(cmd, raw)
   local f = assert(io.popen(cmd, 'r'))
@@ -11,7 +12,7 @@ end
 function get_uploader(url,uploader)
   return os.capture(
 --    'youtube-dl --get-filename -o "%(uploader)s" "' .. url .. '"')
-    'youtube-dl -j "' .. url .. '" |jq -r .' .. uploader)
+    'youtube-dl -j "' .. url .. '"| jq -r .' .. uploader)
 end
 
 function on_loaded()
@@ -27,10 +28,11 @@ function on_loaded()
     end
 
     filepath = mp.get_property("path")
-    if (filepath:find("http") ~= 1) then return end
-    msg.warn("http matched " .. filepath:find("http"))
 
-    if ( string.find(filepath, 'facebook') )
+    if (filepath:find("http") ~= 1) then return end
+    msg.warn("http matched " .. filepath)
+
+    if ( string.find(filepath, 'facebook.com') )
     then
 	iconfile = "/home/DC-1/.icons/facebook.png"
     end
@@ -39,7 +41,7 @@ function on_loaded()
 	iconfile = "/home/DC-1/.icons/youtube.png"
 	json_uploader = "uploader"
     end
-    if ( string.find(filepath, 'twitch') )
+    if ( string.find(filepath, '^https?://[www.]*twitch') )
     then
 	iconfile = "/home/DC-1/.icons/twitch.png"
 	json_uploader = "uploader"
@@ -61,8 +63,7 @@ function on_loaded()
 	msg.warn("website icon use")
         cmd = { args = {"xseticon.sh", iconfile } }
         utils.subprocess(cmd)
---	if ( string.find(filepath, 'youtu') )
-	if (json_uploader)
+	if (json_uploader) and (patched == nil)
 	then
 --	    cmd = { args = {"sleep", "2"} }
 --	    utils.subprocess(cmd)
