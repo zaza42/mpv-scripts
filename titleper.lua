@@ -8,10 +8,10 @@ function os.capture(cmd, raw)
   return string.sub(s, 0, -2) -- Use string.sub to trim the trailing newline.
 end
 
-function get_uploader(url)
+function get_uploader(url,uploader)
   return os.capture(
 --    'youtube-dl --get-filename -o "%(uploader)s" "' .. url .. '"')
-    'youtube-dl -j "' .. url .. '" |jq -r .uploader')
+    'youtube-dl -j "' .. url .. '" |jq -r .' .. uploader)
 end
 
 function on_loaded()
@@ -37,10 +37,12 @@ function on_loaded()
     if ( string.find(filepath, 'yout') )
     then
 	iconfile = "/home/DC-1/.icons/youtube.png"
+	json_uploader = "uploader"
     end
     if ( string.find(filepath, 'twitch') )
     then
 	iconfile = "/home/DC-1/.icons/twitch.png"
+	json_uploader = "uploader"
     end
     if ( string.find(filepath, 'indavideo') )
     then
@@ -59,11 +61,12 @@ function on_loaded()
 	msg.warn("website icon use")
         cmd = { args = {"xseticon.sh", iconfile } }
         utils.subprocess(cmd)
-	if ( string.find(filepath, 'youtu') )
+--	if ( string.find(filepath, 'youtu') )
+	if (json_uploader)
 	then
 --	    cmd = { args = {"sleep", "2"} }
 --	    utils.subprocess(cmd)
-	    uploader = get_uploader(filepath)
+	    uploader = get_uploader(filepath,json_uploader)
 	    if (uploader)
 	    then
 		local newtitle = title .. ' @' .. uploader
