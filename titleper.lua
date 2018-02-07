@@ -1,3 +1,14 @@
+--
+-- mpv bring back slash in title v0.4
+--   ( copy me to ~/.config/mpv/scripts/ )
+--
+-- required binaries:
+-- mpv          - http://mpv.io
+-- youtube-dl   - https://youtube-dl.org/
+-- xdotool      - https://www.semicomplete.com/blog/projects/xdotool/
+-- xseticon     - http://www.leonerd.org.uk/code/xseticon/
+--
+
 local utils = require 'mp.utils'
 local msg = require 'mp.msg'
 --local patched = 1
@@ -22,8 +33,6 @@ function on_loaded()
 	msg.warn("title on_preload matched")
 	cmd = { args = {"sleep", "0.1"} }
 	utils.subprocess(cmd)
---	cmd = { args = {"xsettitle.sh", title} }
---	utils.subprocess(cmd)
 	mp.set_property("file-local-options/title", title)
     end
 
@@ -61,14 +70,11 @@ function on_loaded()
     if (iconfile)
     then
 	msg.warn("website icon use")
---        cmd = { args = {"xseticon.sh", iconfile } }
         cmd = { args = {"sh", "-c", 
 	    "xseticon -id $(xdotool search --sync --onlyvisible --pid $PPID) " .. iconfile } }
         utils.subprocess(cmd)
 	if (json_uploader) and (patched == nil)
 	then
---	    cmd = { args = {"sleep", "2"} }
---	    utils.subprocess(cmd)
 	    uploader = get_uploader(filepath,json_uploader)
 	    if (uploader)
 	    then
