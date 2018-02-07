@@ -1,5 +1,5 @@
 --
--- mpv bring back slash in title v0.4
+-- mpv bring back slash in title v0.4.1
 --   ( copy me to ~/.config/mpv/scripts/ )
 --
 -- required binaries:
@@ -7,11 +7,12 @@
 -- youtube-dl   - https://youtube-dl.org/
 -- xdotool      - https://www.semicomplete.com/blog/projects/xdotool/
 -- xseticon     - http://www.leonerd.org.uk/code/xseticon/
+-- jq           - https://github.com/stedolan/jq
 --
 
 local utils = require 'mp.utils'
 local msg = require 'mp.msg'
---local patched = 1
+local patched = 1
 
 function os.capture(cmd, raw)
   local f = assert(io.popen(cmd, 'r'))
@@ -53,6 +54,11 @@ function on_loaded()
     if ( string.find(filepath, '^https?://[www.]*twitch') )
     then
 	iconfile = "/home/DC-1/.icons/twitch.png"
+	json_uploader = "uploader"
+    end
+    if ( string.find(filepath, '^https?://[www.]*nicovideo.jp') )
+    then
+	iconfile = "/home/DC-1/.icons/nicovideo.png"
 	json_uploader = "uploader"
     end
     if ( string.find(filepath, 'indavideo') )
