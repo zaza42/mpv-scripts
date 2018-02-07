@@ -12,7 +12,7 @@
 
 local utils = require 'mp.utils'
 local msg = require 'mp.msg'
-local patched = 1
+--local patched = 1
 
 function os.capture(cmd, raw)
   local f = assert(io.popen(cmd, 'r'))
