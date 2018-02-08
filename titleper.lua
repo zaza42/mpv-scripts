@@ -1,5 +1,5 @@
 --
--- mpv bring back slash in title v0.5.4
+-- mpv bring back slash in title v0.5.5
 --   ( copy me to ~/.config/mpv/scripts/ )
 --
 -- required binaries:
@@ -95,14 +95,13 @@ end
 
 function os.capture(cmd)
   local f = assert(io.popen(cmd, 'r'))
-  local s = assert(f:read('*a'))
+  local s = assert(f:read "*a")
   f:close()
   return string.sub(s, 0, -2) -- Use string.sub to trim the trailing newline.
 end
 
 function get_title(url)
-  return os.capture(
-    'youtube-dl -j "' .. url .. '"| jq -r \'.title+" @"+.uploader\'')
+  return os.capture( 'youtube-dl -j "' .. url .. '"| jq -r \'.title+" @"+.uploader\'')
 end
 
 function file_exists(name)
@@ -125,13 +124,13 @@ function on_loaded()
     if (filepath:find("http") ~= 1) then return end
     msg.warn("http matched " .. filepath)
 
-    if ( string.find(filepath, 'facebook.com') ) then writebase64(facebook) end
-    if ( string.find(filepath, 'yout') ) then writebase64(youtube)
-    elseif ( string.find(filepath, 'soundcloud.com') ) then writebase64(soundcloud)
-    elseif ( string.find(filepath, '^https?://[www.]*twitch') ) then writebase64(twitch)
-    elseif ( string.find(filepath, '^https?://[www.]*nicovideo.jp') ) then writebase64(nicovideo)
-    elseif ( string.find(filepath, 'indavideo') ) then writebase64(indavideo)
-    elseif ( string.find(filepath, 'streamable.com') ) then writebase64(streamable)
+    if ( filepath:find 'facebook.com') then writebase64(facebook) end
+    if ( filepath:find 'yout') then writebase64(youtube)
+    elseif ( filepath:find 'soundcloud.com') then writebase64(soundcloud)
+    elseif ( filepath:find '^https?://[www.]*twitch') then writebase64(twitch)
+    elseif ( filepath:find '^https?://[www.]*nicovideo.jp') then writebase64(nicovideo)
+    elseif ( filepath:find 'indavideo') then writebase64(indavideo)
+    elseif ( filepath:find 'streamable.com') then writebase64(streamable)
     end
     if (file_exists(myoutfile))
     then
@@ -141,10 +140,11 @@ function on_loaded()
         utils.subprocess(cmd)
 	os.remove(myoutfile)
     end
-    if (patched == nil)
+    if not patched
     then
         newtitle = get_title(filepath)
-	msg.warn("filepath:", filepath, "uploader: ", uploader, "newtitle: ", newtitle)
+        msg.debug("filepath: " .. filepath)
+        msg.warn("newtitle: " .. newtitle)
 	mp.set_property("file-local-options/title", newtitle)
 	mp.set_property("file-local-options/force-media-title", newtitle)
     end
