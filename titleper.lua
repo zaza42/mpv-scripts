@@ -1,12 +1,14 @@
 --
--- mpv bring back slash in title v0.5.1
+-- mpv bring back slash in title v0.5.3
 --   ( copy me to ~/.config/mpv/scripts/ )
 --
 -- required binaries:
 -- youtube-dl   - https://youtube-dl.org/
 -- xdotool      - https://www.semicomplete.com/blog/projects/xdotool/
 -- xseticon     - http://www.leonerd.org.uk/code/xseticon/
+--      (debian - http://packages.leonerd.org.uk/dists/unstable/ )
 -- jq           - https://github.com/stedolan/jq
+-- luasocket
 --
 
 local utils = require 'mp.utils'
@@ -112,32 +114,15 @@ function on_loaded()
     if (filepath:find("http") ~= 1) then return end
     msg.warn("http matched " .. filepath)
 
-    if ( string.find(filepath, 'facebook.com') )
-    then
-	writebase64(facebook)
-    end
-    if ( string.find(filepath, 'yout') )
-    then
+    if ( string.find(filepath, 'facebook.com') ) then writebase64(facebook)
+    elseif ( string.find(filepath, 'yout') ) then writebase64(youtube)
 	json_uploader = "uploader"
-	writebase64(youtube)
-    end
-    if ( string.find(filepath, '^https?://[www.]*twitch') )
-    then
+    elseif ( string.find(filepath, '^https?://[www.]*twitch') ) then writebase64(twitch)
 	json_uploader = "uploader"
-	writebase64(twitch)
-    end
-    if ( string.find(filepath, '^https?://[www.]*nicovideo.jp') )
-    then
+    elseif ( string.find(filepath, '^https?://[www.]*nicovideo.jp') ) then writebase64(nicovideo)
 	json_uploader = "uploader"
-	writebase64(nicovideo)
-    end
-    if ( string.find(filepath, 'indavideo') )
-    then
-	writebase64(indavideo)
-    end
-    if ( string.find(filepath, 'streamable.com') )
-    then
-	writebase64(streamable)
+    elseif ( string.find(filepath, 'indavideo') ) then writebase64(indavideo)
+    elseif ( string.find(filepath, 'streamable.com') ) then writebase64(streamable)
     end
     if (file_exists(myoutfile))
     then
