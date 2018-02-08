@@ -1,5 +1,5 @@
 --
--- mpv bring back slash in title v0.5.3
+-- mpv bring back slash in title v0.5.4
 --   ( copy me to ~/.config/mpv/scripts/ )
 --
 -- required binaries:
@@ -13,7 +13,7 @@
 
 local utils = require 'mp.utils'
 local msg = require 'mp.msg'
-local patched = 1
+--local patched = 1
 
 youtube = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz" ..
 "AAALEwAACxMBAJqcGAAAASpJREFUOI3Fj7FKAwEQRN+ud7nLiUlIIXikDwiS3iLp9ENsrvYLtBFS" ..
@@ -55,7 +55,7 @@ indavideo = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQA
 "dFp4US/y/rAw0NddRhYmmpd121k4DPwM/I0TWq0TTsn4eO4AAAAldEVYdGRhdGU6Y3JlYXRlADIw" ..
 "MTgtMDItMDVUMTI6MDQ6MjErMDE6MDBlgT3DAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE0LTAyLTA2" ..
 "VDE0OjE2OjIzKzAxOjAwKvdFhAAAAABJRU5ErkJggg=="
-streamerable = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABU1BMVEUPkPoPkPoPkPoPkPoPkPoP" ..
+streamable = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABU1BMVEUPkPoPkPoPkPoPkPoPkPoP" ..
 "kPoPkPoPkPoPkPoPkPoPkPoPkPoPkPoPkPoNj/oPkPoNj/oNj/qExv0PkPpruvwPkPornfoVk/op" ..
 "nPpnufwPkPqExv0Nj/oPkPoNj/oPkPoPkPoPkPoPkPoPkPoPkPoPkPoPkPoPkPoPkPoPkPoPkPoO" ..
 "j/opnPsVk/oMjvoOkPoTkfo6pPsblfo3ovva7v7////v9/5Sr/whmPry+f5htvze8P7W7P5itvyl" ..
@@ -67,6 +67,17 @@ streamerable = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABU1BMVEUPkPoPkPoP
 "KeLZhY2qxdrv3486cWxUVV2+pbRnfVju8xQREaEJgtjEZc59REAt0anbzlv1aJIh5+e4yfkp4kGr" ..
 "v8W0OF8/tvfXbX1X3j8lbwAAgK9dxTytAAAYdlRwyGMDwFheQAA61Z8e4B9zfC+56atCOAAAAABJ" ..
 "RU5ErkJggg=="
+soundcloud = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABJlBMVEVTKwBuOABuOQBVLACmVQD7" ..
+"ggD9fgL8ggCrWAA0GwDreQD8eQT8egTuewA8HwDqeQDuewCiVACtWQD6gQBOKAD9fQJXLQBmNQBz" ..
+"OwBzOwBNJwD9fQJWLAD5gQD8ggChUwCqWADoeADtegAzGgDpeADsegA5HQCiUwD5gQD7gQCmVgBP" ..
+"KQBrNwBsOABRKgD8eAT4Zwv3Yg77dAb3Yg33byP6r4T7y7D5ll73YxD4ikz5o3L7vZr96t/+/v79" ..
+"/f35k1r3dSz4jE/6upb7yq7807397eX85Nb6t5H3ax37xab7v57807z82sj84ND98er6sIf4eTL6" ..
+"roP6rID6uZX7yKv7z7b97OL9+/n5jlL3ZhT3Zxb3aBj3ahr3byL3cyj8eQT7cwb///8h/uObAAAA" ..
+"AXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfiAggP" ..
+"NyX4c1joAAAAoklEQVQY02NgwApY2fT12djhXC5uA0MgMODhhfD5jYwNwcDYSAAswA3lA0W4QXxh" ..
+"sHoTUzNzoC6QOaKGhhaWVtY2tnb2hoaiQAF9CwdHJ2cXV1tbN3cPfZCAo6eXt4+vny0Q+IMEpAMC" ..
+"g4JDQsOA/PAIkBZZA4vIqOiY2Li4OA8DOZA18WjWMigmwByWoARxqko8xOncqnDfaEjr60trYvc4" ..
+"APJjIbHFY3ZEAAAAAElFTkSuQmCC"
 myoutfile = "/tmp/mpv-favicon.png"
 
 local ltn12 = require "ltn12"
@@ -82,16 +93,16 @@ ltn12.pump.all(
 )
 end
 
-function os.capture(cmd, raw)
+function os.capture(cmd)
   local f = assert(io.popen(cmd, 'r'))
   local s = assert(f:read('*a'))
   f:close()
   return string.sub(s, 0, -2) -- Use string.sub to trim the trailing newline.
 end
 
-function get_uploader(url,uploader)
+function get_title(url)
   return os.capture(
-    'youtube-dl -j "' .. url .. '"| jq -r .' .. uploader)
+    'youtube-dl -j "' .. url .. '"| jq -r \'.title+" @"+.uploader\'')
 end
 
 function file_exists(name)
@@ -114,34 +125,28 @@ function on_loaded()
     if (filepath:find("http") ~= 1) then return end
     msg.warn("http matched " .. filepath)
 
-    if ( string.find(filepath, 'facebook.com') ) then writebase64(facebook)
-    elseif ( string.find(filepath, 'yout') ) then writebase64(youtube)
-	json_uploader = "uploader"
+    if ( string.find(filepath, 'facebook.com') ) then writebase64(facebook) end
+    if ( string.find(filepath, 'yout') ) then writebase64(youtube)
+    elseif ( string.find(filepath, 'soundcloud.com') ) then writebase64(soundcloud)
     elseif ( string.find(filepath, '^https?://[www.]*twitch') ) then writebase64(twitch)
-	json_uploader = "uploader"
     elseif ( string.find(filepath, '^https?://[www.]*nicovideo.jp') ) then writebase64(nicovideo)
-	json_uploader = "uploader"
     elseif ( string.find(filepath, 'indavideo') ) then writebase64(indavideo)
     elseif ( string.find(filepath, 'streamable.com') ) then writebase64(streamable)
     end
     if (file_exists(myoutfile))
     then
 	msg.warn("website icon use")
-        cmd = { args = {"sh", "-c", 
+        cmd = { args = {"sh", "-c",
 	    "xseticon -id $(xdotool search --sync --onlyvisible --pid $PPID) " .. myoutfile } }
         utils.subprocess(cmd)
-	if (json_uploader) and (patched == nil)
-	then
-	    uploader = get_uploader(filepath,json_uploader)
-	    if (uploader)
-	    then
-		local newtitle = title .. ' @' .. uploader
-		msg.warn("filepath:", filepath, "uploader: ", uploader, "newtitle: ", newtitle)
-		mp.set_property("file-local-options/title", newtitle)
-		mp.set_property("file-local-options/force-media-title", newtitle)
-	    end
-	end
 	os.remove(myoutfile)
+    end
+    if (patched == nil)
+    then
+        newtitle = get_title(filepath)
+	msg.warn("filepath:", filepath, "uploader: ", uploader, "newtitle: ", newtitle)
+	mp.set_property("file-local-options/title", newtitle)
+	mp.set_property("file-local-options/force-media-title", newtitle)
     end
 end
 
