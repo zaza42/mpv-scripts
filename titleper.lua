@@ -1,5 +1,5 @@
 --
--- mpv bring back slash in title v0.5.5
+-- mpv bring back slash in title v0.5.6
 --   ( copy me to ~/.config/mpv/scripts/ )
 --
 -- required binaries:
@@ -13,7 +13,7 @@
 
 local utils = require 'mp.utils'
 local msg = require 'mp.msg'
---local patched = 1
+local patched = 1
 
 youtube = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz" ..
 "AAALEwAACxMBAJqcGAAAASpJREFUOI3Fj7FKAwEQRN+ud7nLiUlIIXikDwiS3iLp9ENsrvYLtBFS" ..
@@ -78,6 +78,16 @@ soundcloud = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABJlBMVEVTKwBuOABuOQ
 "sHoTUzNzoC6QOaKGhhaWVtY2tnb2hoaiQAF9CwdHJ2cXV1tbN3cPfZCAo6eXt4+vny0Q+IMEpAMC" ..
 "g4JDQsOA/PAIkBZZA4vIqOiY2Li4OA8DOZA18WjWMigmwByWoARxqko8xOncqnDfaEjr60trYvc4" ..
 "APJjIbHFY3ZEAAAAAElFTkSuQmCC"
+bilibili = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAb1BMVEUAodYAodYAodYAodYAodYA" ..
+"odYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYA" ..
+"odYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodYAodb///8pppHuAAAAAXRSTlMAQObYZgAA" ..
+"AAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAABSSURBVBjTbY5BDoAwCAT35slGE2PC" ..
+"efv/N4rQIKXOZelACcAPpOc2UgumAHYGzT9kTu1fPXjXkT0xBMTaEsKnvDIhJuQTy45J3MQsymEq" ..
+"jvKuPAU5GU4j4T2TAAAAAElFTkSuQmCC"
+--
+-- to make your own icon: base64 favicon-16.png |sed -e 's/\(.*\)/"\1" ../'
+--
+
 myoutfile = "/tmp/mpv-favicon.png"
 
 local ltn12 = require "ltn12"
@@ -131,6 +141,7 @@ function on_loaded()
     elseif ( filepath:find '^https?://[www.]*nicovideo.jp') then writebase64(nicovideo)
     elseif ( filepath:find 'indavideo') then writebase64(indavideo)
     elseif ( filepath:find 'streamable.com') then writebase64(streamable)
+    elseif ( filepath:find 'bilibili.com') then writebase64(bilibili)
     end
     if (file_exists(myoutfile))
     then
