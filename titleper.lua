@@ -84,6 +84,13 @@ bilibili = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAb1BMVEUAodYAodYAodYA
 "AAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAABSSURBVBjTbY5BDoAwCAT35slGE2PC" ..
 "efv/N4rQIKXOZelACcAPpOc2UgumAHYGzT9kTu1fPXjXkT0xBMTaEsKnvDIhJuQTy45J3MQsymEq" ..
 "jvKuPAU5GU4j4T2TAAAAAElFTkSuQmCC"
+vimeo = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAnFBMVEUAre8Are8Are8Are8Are8e" ..
+"t/EKsPA0vvJRx/QJsPAHr++O2/j9/v+66fuX3vj///+b3/kOsvC+6vv+//8YtfE7wPPz+/7T8fwc" ..
+"tvFozva05/pLxfQiuPGv5fo/wfN41PdTyPQFr++o4/rV8fy46Puw5vr3/P7N7/zr+f4atfFmzvX1" ..
+"/P5AwvMNsfDs+f7w+v5Dw/M6wPOC1/cbtvFA3hZnAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgA" ..
+"AAAJcEhZcwAACxMAAAsTAQCanBgAAAB9SURBVBjTXc/XEoNQCEVRVKLp2zTTe+/t//8tyVwzojww" ..
+"w3qAg4inpjwRXzUvWigHpfDbonIlhWqt3lBtQuyg1YZOt5dA38FgOIKxTmD63zGDuS5+msIyYRWu" ..
+"2WRXtuz2HI4ZnIDzxeS43rg/bDB9vt65pDZ64TlfJLBzIB+3HwlaT7LyVAAAAABJRU5ErkJggg=="
 --
 -- to make your own icon: base64 favicon-16.png |sed -e 's/\(.*\)/"\1" ../'
 --
@@ -142,6 +149,7 @@ function on_loaded()
     elseif ( filepath:find 'indavideo') then writebase64(indavideo)
     elseif ( filepath:find 'streamable.com') then writebase64(streamable)
     elseif ( filepath:find 'bilibili.com') then writebase64(bilibili)
+    elseif ( filepath:find 'vimeo.com') then writebase64(vimeo)
     end
     if (file_exists(myoutfile))
     then
