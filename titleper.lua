@@ -13,7 +13,7 @@
 
 local utils = require 'mp.utils'
 local msg = require 'mp.msg'
-local patched = 1
+--local patched = 1
 
 youtube = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz" ..
 "AAALEwAACxMBAJqcGAAAASpJREFUOI3Fj7FKAwEQRN+ud7nLiUlIIXikDwiS3iLp9ENsrvYLtBFS" ..
@@ -91,6 +91,35 @@ vimeo = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAnFBMVEUAre8Are8Are8Are8
 "AAAJcEhZcwAACxMAAAsTAQCanBgAAAB9SURBVBjTXc/XEoNQCEVRVKLp2zTTe+/t//8tyVwzojww" ..
 "w3qAg4inpjwRXzUvWigHpfDbonIlhWqt3lBtQuyg1YZOt5dA38FgOIKxTmD63zGDuS5+msIyYRWu" ..
 "2WRXtuz2HI4ZnIDzxeS43rg/bDB9vt65pDZ64TlfJLBzIB+3HwlaT7LyVAAAAABJRU5ErkJggg=="
+cmovies4u = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBI" ..
+"WXMAAA7CAAAOwgEVKEqAAAACKUlEQVQ4y42TvWtUQRTFf3d289WINlEQTKLJe5v3ZlcQgnYpEpUg" ..
+"IgjqPxCx0VpERAQLLazEMjZqY4IgiKAhWtjYCEneV97bfCE2YiEGI64JMxYbk4mFcbo595x7D3Pu" ..
+"CMDbwUH2fvpMsDAHQOQHVwQZBroAAywCL3WePASIvJBqkQAgcRAga1bCemYjP7wscJ9/HGPsuVo9" ..
+"nYj9UHSeWGXXhQ3x053EAErJeOSHd3We2NgLkKbl8KrAHZdo4THYKSwiIieBC1slBGvO6yIbl5lu" ..
+"v1xqK685wpWfvxqdA0vzDbdhWvF2GdvyBWj9g+k8EaXayje2T7adA0vzjaS7skmM/YBgrlgpG7PP" ..
+"5UZecFEJnHCmP6rlaQPAtJUexH44HXvBEZ2nAFTq2Vfg+R++iIwooMeZP7VZhO/AYUQ+xH5YJF7/" ..
+"UJNi3jgmepSl+ZAAYik5btodYp8RNRH19h+zoqyDixJY3rrKKcdBhwWstS/A6mqe7KnOZ+8FzjgN" ..
+"lpVrGzib9vqdTQfmWWtLR3u1SE/rPE2aceuDwJDDfy0zfthRgh/blsWsdwX1/KOLzXphRQmZi+k8" ..
+"EdmI6TbI9b+W7p2FSQEFdgTk6La4rR2tFumYxH0Bup4Se8EkIsP83xnTeTI6W9EoWiA+VBFdpMeB" ..
+"mzsprTWXdJ6MpkFNqnNxM8LpWo3W1TWChYzFgf2l1W+7r4nYIZADG995yVjzqlZk9wCK/ipPsohb" ..
+"wG/rQNgUynZ/zAAAAABJRU5ErkJggg=="
+usatoday = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAaVBMVEUAZ/8AZ/8AZ/8AZ/8AZ/8A" ..
+"Z/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8A" ..
+"Z/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/8AZ/////9YL4h4AAAAAXRSTlMAQObYZgAAAAFiS0dE" ..
+"AIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAABaSURBVBjTY2DAChiZFBWZkfjsimDAAeNzK0IB" ..
+"D4TPrwgHYDWMikgAJCCILCAIFEDmKwqhC4D0iCDzRYACosgCYiBThRB8qENQbQUBaQhXBuEZeaDn" ..
+"FLD7mwEAVMcSAw8xNXkAAAAASUVORK5CYII="
+videa = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBI" ..
+"WXMAAAsTAAALEwEAmpwYAAAB30lEQVQ4y42TMWhTURSGv3PvS0JBkr7YooNUKJWCkzYiFjJ1KOjQ" ..
+"giiCUEU3BxHcpJNdReggCh0LdbHg7iYUIkIgUIhDpVJoJdCSNCHtS9Pcex1eEpO0KT3budzz/+c/" ..
+"5z/QJ4p+KsE5QnqK0ljmjbK3NSoJgCXjFKsNL1i6tJuv9gUoDqbmjZi3Gq1PYzLYoka9TJayn08A" ..
+"FAdvzSFu+TwtO/ja8IInrW7E8VDvxTc2tdYjAN6dG0Qf3QOg8SOHHh9F/DgAwZv3uNoRWDIo7iZL" ..
+"2bJX8jcnNWExQGQ6Tezp/VD+1l8i02n09bEQYOED1I5AMelwy8CswrlUZ4utzwAm/xu06jN9mSkl" ..
+"JqaUE4bPAlAX/WZicQdBF4hVMqPESbSNGr+AunI5HFYl3JgM+U05O1A/7h6otVHlhEKbfezqf/Tt" ..
+"ArHnD9r58be1kzIU3z1xkkVc+DIQ65LSkuMqVWofV7p9YczaUOXaqvL3DzNYU2itrZfJ5H5RmZrD" ..
+"bhc6xJtCBHkmfDFNI028QmSxzT4+CgMx7MYW7uCwl3ndk+isX/75p8vKe4mbK0qpx/0caKCuHQv+" ..
+"fvBOyNf7HdMLB68FOnbJDopPXsMsxau53TOvsQNoRFk3nCjX1jvZTot/Ft663C517noAAAAASUVO" ..
+"RK5CYII="
 --
 -- to make your own icon: base64 favicon-16.png |sed -e 's/\(.*\)/"\1" ../'
 --
@@ -138,7 +167,8 @@ function on_loaded()
 
     filepath = mp.get_property("path")
 
-    if (filepath:find("http") ~= 1) then return end
+    if ( (filepath:find("http") ~= 1) and (filepath:find("ytdl") ~= 1))
+	then return end
     msg.warn("http matched " .. filepath)
 
     if ( filepath:find 'facebook.com') then writebase64(facebook) end
@@ -150,6 +180,10 @@ function on_loaded()
     elseif ( filepath:find 'streamable.com') then writebase64(streamable)
     elseif ( filepath:find 'bilibili.com') then writebase64(bilibili)
     elseif ( filepath:find 'vimeo.com') then writebase64(vimeo)
+    elseif ( ( filepath:find 'cmovies4u.com') or ( filepath:find 'oloadcdn.net') )
+	then writebase64(cmovies4u)
+    elseif ( filepath:find 'usatoday.com') then writebase64(usatoday)
+    elseif ( filepath:find 'videa.hu') then writebase64(videa)
     end
     if (file_exists(myoutfile))
     then
