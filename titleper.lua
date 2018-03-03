@@ -1,5 +1,5 @@
 --
--- mpv bring back slash in title v0.5.6
+-- mpv bring back slash in title v0.6.0
 --   ( copy me to ~/.config/mpv/scripts/ )
 --
 -- required binaries:
@@ -13,8 +13,9 @@
 
 local utils = require 'mp.utils'
 local msg = require 'mp.msg'
---local patched = 1
+-- local patched = 1
 
+mpv = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACvklEQVQ4y3WTSWhUWRSGv/MmU1UpwYSoFbs0VXFo7IhTowgaJGrEhbYLFw44LNqFjWD3Og3dLsSFLlwILgRbXShuXPRCEcUhEUQRIyZROnGImipRkjhVXr2q9+69LrpSiMOBs7nn8t9z7v8d4esQwKqkVM4MoCtpvrz8edhL61obG+KTf3fEaReRZkFcbfRAaKKLw/6bI7dHO/OA+paAuza1YWvcTRwVpPYbnWEwBT8c23vp1b9ngBDArtSc9tT67bVu8h9BPICmWRl+Xr2YzNwMumx4P/oOQTzP9jam401PnxT6ewEtgCyZtHz2tGT6niDxmpoYew79yoK2FrTWKKXQWtN9tZcTf56mFAQYjJ/7+HLRnbc3+y3ArY817BMkDrDn8G4WtLVw8q+zvBkaRmuN1pp5rT+y8++tlbklXh9r2Ae4FjDBs712gMzsLPNXzkUpxcDdJxz57RgXTl4h8EsopfhpxRx+yKQB8GxvDeBZgGuJ1QQwc1G2+mIYhRT9IhdPXWL/joN0dz1AKcWMef8LWGJlAM+p+B0CtjGmKhCUivgln6BcxC5bRGGE1hqjqxiEgOUARhmVd8TJPu5+Wv20QlBAmYg1m1exdlsbtmujtWaw9wUAyqg8YBwgKoZ+V9KbmB3sf8b9a320rJjDzIXNbNr7C/VTJ1W76rnxiPxgDoBi6HcBkQ1YEsnrKYnUFkGcns4+UtkU63atJpaoqVrZd/M/zh08j1IKgwkejfT+8TYaGZIKTHXL6lfuTiUaD4wPmG6ezoyWNNponve8JPdsqErkq7F8x62R68eB0XGUJwBTlta17misndYhSM13UA7yhdyB26Odp4HXQGkcZQ2Uc8XnA37gX4u5cXEsJ2mJFQNUpKOhD+X3F/pGHnQ8LNy/DAwDpS+XSQAPSAITgQTgfmbZGPAB+AiUx9f6E25gOc5E3m0HAAAAAElFTkSuQmCC"
 youtube = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAASpJREFUOI3Fj7FKAwEQRN+ud7nLiUlIIXikDwiS3iLp9ENsrvYLtBFSCfmBfMHVYhtsbWwsrVKqJEjMJWHXRkTCRSQITjkzOzML/w15bLf3oji+Vvdjc28o7KIaGYQKCmBgCkvM5gYz4FVE7mI4D6pxfAGcIYKKfCXrt5bPoAjVSKEOHACHBTyrw8m28w1O1SEtE/cHA4JW68cAhVQxq5WJ1W6XNM9pZBkSReULzGqqqsGmBoki6llGmudUe70yS0XL2FK4l9KBma02rfCiYDIcMh0O8aIosywCVKdAc115H4146fdZjccbR6nqVJ46nQeBo1+9sQaDewVutzkGEPebIFkuL2dhWBGzLiJNd09QjQVCgxBAYeWwwGwu8IbIxEVGO0lytW353+EDEcdb/8vRttIAAAAASUVORK5CYII="
 facebook = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAABp0lEQVQ4y5WTPWtUQRSGn7l37r0M7qIJQrSwyIKdaLFIFBHsNSpYiZ0gqcTKYkGwDGppIWns7Az4C8RGREVsJWWw3mxMsnM/ZuZYrLt3sx/InmrOvOc8c15mRrVuvXwiIpsiwbBAKBVZpVRHrd580b98dc0sn2pi0pgsiUh0RBIrlFIIQgjgfKCoAnnpsaWn2zvg57fvVosEc7Jp+LW7t8gAtM42EAlGA6SxIMHNLFxqpty5co7rF1ZYPdPgMHfcfv4Rkwx0DaAjIfjZgGf327TPnwZg76AgTWKCd2Ra1YCI+YCLrWUAHr76xM7vfZQCkcHUI4AiTFn4/Presfzt0xsAXHu8PWiMxyxI8HMnmIxhXcTYBM65KcDaxjsAvm49OJaP3oGEGlCV1dxbGMak7oOvAXlZ/tfCpF5VVQ3o24LgHRt323MBj9YvjdZbH36QF+U4IEe8Q/75mmlhTBPvsLaoAUd9SwiON++/TDXO2hseOgTY/T9HZqmRccKkmCzBZAlZqtFxRBxHKCCI4L1QVI6ycnR7hwBWK+h0e/lmt5cv9J0Bq6DzF87Qyjqp0GJ2AAAAAElFTkSuQmCC"
 twitch = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAApUlEQVQ4y2P8//8/AwMDA0Oq0zIIg0TAxMDAwHB8932yNDMwMDAw/v//H8X22fuiiNKY6rQM4QJKAF4DDm+9A7cJmU20ARS7gC4GsOCTtPVWYbD1VsFgU+yCLYuvkG/AlsVXGDbOv8TAwMDA0LrIF9MLyFEFS1TYoq91kS+DmAwvIxOxKQ6bZoJeIKQZnhewaEQRzG62YzCwlmEkKx3g08zAwMAAAL2DN6b39LbLAAAAAElFTkSuQmCC"
@@ -77,12 +78,12 @@ function on_loaded()
 
     filepath = mp.get_property("path")
 
-    if ( (filepath:find("http") ~= 1) and (filepath:find("ytdl") ~= 1))
-	then return end
-    msg.warn("http matched " .. filepath)
+--    if ( (filepath:find("http") ~= 1) and (filepath:find("ytdl") ~= 1))
+--	then return end
+--    msg.warn("http matched " .. filepath)
 
-    if ( filepath:find 'facebook.com') then writebase64(facebook) end
-    if ( filepath:find 'yout') then writebase64(youtube)
+    if ( filepath:find 'facebook.com') then writebase64(facebook)
+    elseif ( filepath:find 'yout') then writebase64(youtube)
     elseif ( filepath:find 'soundcloud.com') then writebase64(soundcloud)
     elseif ( filepath:find '^https?://[www.]*twitch') then writebase64(twitch)
     elseif ( filepath:find '^https?://[www.]*nicovideo.jp') then writebase64(nicovideo)
@@ -96,6 +97,7 @@ function on_loaded()
     elseif ( filepath:find 'videa.hu') then writebase64(videa)
     elseif ( filepath:find 'twitter.com') then writebase64(twitter)
     elseif ( filepath:find 'dailymotion.com') then writebase64(dailymotion)
+    else writebase64(mpv)
     end
     if (file_exists(myoutfile))
     then
