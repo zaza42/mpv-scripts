@@ -22,7 +22,23 @@ function get_pid()
   return os.capture( 'sh -c "echo $PPID"')
 end
 
+local platform = nil --set to 'linux', 'windows' or 'macos' to override automatic assign
+if not platform then
+  local o = {}
+  if mp.get_property_native('options/vo-mmcss-profile', o) ~= o then
+    platform = 'windows'
+  elseif mp.get_property_native('options/input-app-events', o) ~= o then
+    platform = 'macos'
+  else
+    platform = 'linux'
+  end
+end
+
 function getautosub()
+	if platform == 'linux' then
+	    msg.warn("ytdl-autosub: Linux required with xseticon binary")
+	    return
+	end
 	filepath = mp.get_property("path")
 	if (filepath:find("http") ~= 1) then return end
 	msg.warn("download autosub")
