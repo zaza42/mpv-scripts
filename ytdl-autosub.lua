@@ -36,7 +36,7 @@ end
 
 function getautosub()
 	if platform == 'linux' then
-	    msg.warn("ytdl-autosub: Linux required with xseticon binary")
+	    msg.warn("ytdl-autosub: Linux required")
 	    return
 	end
 	filepath = mp.get_property("path")
