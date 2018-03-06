@@ -35,7 +35,7 @@ if not platform then
 end
 
 function getautosub()
-	if platform == 'linux' then
+	if platform ~= 'linux' then
 	    msg.warn("ytdl-autosub: Linux required")
 	    return
 	end
