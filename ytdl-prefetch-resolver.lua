@@ -9,7 +9,7 @@ local utils = require 'mp.utils'
 local msg = require 'mp.msg'
 
 --local ytdlPath = mp.find_config_file("youtube-dl")
-local ytdlPath = "/usr/local/bin/youtube-dl"
+local ytdlPath = "youtube-dl"
 local fileDuration = 0
 local function check_position()
 	if fileDuration==0 then
